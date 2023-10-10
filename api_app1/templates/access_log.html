@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+
+    <title>梦情API调用管理</title>
+
+{% endblock %}
+
+{% block style %}
+    <style>
+        #mdui-table {
+            max-height: 800px;
+            /* 设置最大高度 */
+            overflow-y: auto;
+            /* 当内容溢出时显示垂直滚动条 */
+            border-radius: 10px;
+        }
+
+        .checked th {
+            color: #1a73e8 !important;
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        .mdui-typo code {
+            padding: 2px 6px;
+            color: #c7254e;
+            background-color: #f7f7f9;
+            border-radius: 2px;
+        }
+    </style>
+
+
+{% endblock %}
+
+{% block content %}
+    <div class="mdui-api-box mdui-container mdui-p-x-2">
+        <div class="mdui-table-fluid " id="mdui-table">
+            <table class=" mdui-table mdui-table-hoverable">
+                <thead>
+                <tr class="checked">
+                    <th style="width: 200px;">时间</th>
+                    <th class="ip" style="width: 200px;">IP</th>
+                    <th style="width: 300px;">地址</th>
+                    <th style="width: 130px;">协议</th>
+                    <th style="width: 80px;">方法</th>
+                    <th style="width: 400px;">UA</th>
+                </tr>
+                </thead>
+                <tbody class="mdui-typo">
+                {% for foo in api_call_list %}
+                    <tr>
+                        <td style="width: 200px;">{{ foo.api_create_time|date:"Y-m-d H:i:s" }}</td>
+                        <td style="width: 200px; "><code>{{ foo.api_ip }}</code></td>
+                        <td style="width: 300px;">{{ foo.api_url }}</td>
+                        <td style="width: 130px;"><code>{{ foo.api_protocol }}</code></td>
+                        <td style="width: 80px;"><code>{{ foo.api_method }}</code></td>
+                        <td style="width: 500px;">{{ foo.api_UA }}</td>
+                    </tr>
+
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

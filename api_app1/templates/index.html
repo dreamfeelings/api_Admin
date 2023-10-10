@@ -1,0 +1,100 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+
+    <title>梦情API调用管理</title>
+
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="mdui-api-box mdui-container mdui-panel mdui-panel-popout" mdui-panel="{accordion: true}">
+        {% for api_class in api_class_list %}
+
+            <div class="mdui-panel-item">
+                <div class="mdui-panel-item-header  mdui-ripple mdui-ripple-red">{{ api_class }}</div>
+                <div class="mdui-panel-item-body">
+                    {% for foo in api_data %}
+                        {% if foo.api_class == api_class %}
+                            <div>
+                                <div class="mdui-col-sm-6 mdui-col-md-4">
+                                    <div class="mdui-card mdui-hoverable mdui-m-y-2">
+                                        <div class="mdui-card-primary">
+                                            <div class="mdui-card-primary-title">
+                                                {{ foo.api_name }}
+                                                <div class="mdui-badge mdui-color-green-400 mdui-text-color-white">正常
+                                                </div>
+                                                {% if foo.api_class == "ChatGPT" %}
+                                                    <button mdui-tooltip="{content: 'http://{{ host }}/{{ foo.api_en_name }}'}"
+                                                            class="mdui-btn mdui-btn-icon mdui-float-right copy-button"
+                                                            clip-text="http://{{ host }}/api/{{ foo.api_en_name }}/?sequence={{ forloop.counter }}&question="
+                                                    >
+
+                                                        <i class="mdui-icon mdui-text-color-theme-icon material-icons">feedback</i>
+                                                    </button>
+                                                {% else %}
+                                                    <button mdui-tooltip="{content: 'http://{{ host }}/api/{{ foo.api_en_name }}'}"
+                                                            class="mdui-btn mdui-btn-icon mdui-float-right copy-button"
+                                                            clip-text="http://{{ host }}/api/tk/?type={{ foo.api_en_name }}&question="
+                                                    >
+
+                                                        <i class="mdui-icon mdui-text-color-theme-icon material-icons">feedback</i>
+                                                    </button>
+                                                {% endif %}
+                                            </div>
+                                            <div class="mdui-card-primary-subtitle" style="font-size: 12px;"><i
+                                                    class="mdui-icon material-icons"
+                                                    style="font-size: 12px;">equalizer</i>累计调用：{{ foo.api_count }} 次
+                                            </div>
+                                        </div>
+                                        <div class="mdui-card-content">{{ foo.api_detail }}</div>
+                                        <div class="mdui-card-actions"><a href="#"
+                                                                          class="mdui-btn mdui-ripple mdui-text-color-theme-accent mdui-float-right">More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                    {% endfor %}
+                </div>
+
+
+            </div>
+
+
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script>
+        // 获取所有包含 copy-button 类的按钮
+        var buttons = document.querySelectorAll('.copy-button');
+
+        // 遍历按钮并添加点击事件处理程序
+        buttons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                // 获取按钮上的 clip-text 属性值
+                var textToCopy = button.getAttribute('clip-text');
+
+                // 创建一个临时的文本输入元素
+                var tempInput = document.createElement('input');
+                document.body.appendChild(tempInput);
+                tempInput.value = textToCopy;
+                tempInput.select();
+
+                // 复制文本到剪贴板
+                document.execCommand('copy');
+
+                // 移除临时文本输入元素
+                document.body.removeChild(tempInput);
+
+                // 可以根据需要执行其他操作，比如显示复制成功的消息
+                console.log('复制成功: ' + textToCopy);
+            });
+        });
+    </script>
+{% endblock %}

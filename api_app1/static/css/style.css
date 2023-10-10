@@ -1,0 +1,34 @@
+.mdui-badge {
+    display: inline;
+    position: relative;
+    border-radius: 4px;
+    text-shadow: none;
+    text-align: center;
+    font-size: 8px;
+    color: #FFFFFF;
+    vertical-align: center;
+    height: 100%;
+    top: -3px;
+    padding-top: 4px;
+    padding-bottom: 3px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.mdui-api-box {
+    width: 85%;
+    margin-top: 40px;
+}
+
+.mdui-dialog {
+    top: calc(50% - 61px) !important;
+}
+
+
+#mdui-table {
+
+    max-height: 800px;
+    /* 设置最大高度 */
+    overflow-y: auto;
+    /* 当内容溢出时显示垂直滚动条 */
+}

@@ -1,0 +1,137 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+
+    <title>API添加</title>
+
+{% endblock %}
+
+
+{% block content %}
+
+
+    <div class="mdui-container">
+        <form method="POST" id="apiForm">
+            {% csrf_token %}
+            <div class="mdui-textfield mdui-textfield-floating-label">
+                <label class="mdui-textfield-label">API分类</label>
+                <input class="mdui-textfield-input" type="text" name="api_class" required/>
+                <div class="mdui-textfield-error">API分类不能为空</div>
+            </div>
+
+            <div class="mdui-textfield mdui-textfield-floating-label">
+                <label class="mdui-textfield-label">API名称</label>
+                <input class="mdui-textfield-input" type="text" name="api_name" required/>
+                <div class="mdui-textfield-error">API名称不能为空</div>
+            </div>
+
+
+            <div class="mdui-textfield mdui-textfield-floating-label">
+                <label class="mdui-textfield-label">API英文名称</label>
+                <input class="mdui-textfield-input" type="text" name="api_en_name" required/>
+                <div class="mdui-textfield-error">API英文名称不能为空</div>
+            </div>
+
+            <div class="mdui-textfield mdui-textfield-floating-label">
+                <label class="mdui-textfield-label">API地址</label>
+                <input class="mdui-textfield-input" type="url" name="api_url" required/>
+                <div class="mdui-textfield-error">地址格式错误</div>
+            </div>
+
+            <div class="mdui-textfield mdui-textfield-floating-label">
+                <label class="mdui-textfield-label">请求方式</label>
+                <input class="mdui-textfield-input" type="text" name="api_method" required/>
+                <div class="mdui-textfield-error">请求方式不能为空</div>
+            </div>
+
+            <div class="mdui-textfield mdui-textfield-floating-label">
+                <label class="mdui-textfield-label">请求参数</label>
+                <textarea class="mdui-textfield-input" type="text" name="api_params" required></textarea>
+                <div class="mdui-textfield-error">请求参数不能为空</div>
+            </div>
+
+            <div class="mdui-textfield mdui-textfield-floating-label">
+                <label class="mdui-textfield-label">备注</label>
+                <textarea class="mdui-textfield-input" type="text" name="api_detail" required></textarea>
+                <div class="mdui-textfield-error">备注不能为空</div>
+            </div>
+
+            <button class="mdui-center mdui-btn mdui-color-red-400 mdui-ripple" id="submitButton">添加</button>
+
+        </form>
+    </div>
+
+
+
+    <!-- 弹窗内容 -->
+    <div class="mdui-dialog mdui-dialog-alert mdui-dialog-open" style="display: none; height: 122px;">
+        <div class="mdui-dialog-content" style="height: 70px;">添加成功！</div>
+        <div class="mdui-dialog-actions">
+            <button onclick="hideDialog()"
+                    class="mdui-btn mdui-ripple mdui-text-color-primary ">关闭
+            </button>
+        </div>
+    </div>
+    <div class="mdui-overlay mdui-overlay-show" style="z-index: 5100; display: none"></div>
+
+
+{% endblock %}
+
+{% block script %}
+    <script>
+        // 页面加载时添加事件监听器
+        document.addEventListener('DOMContentLoaded', function () {
+            // 获取表单和提交按钮
+            var apiForm = document.getElementById('apiForm');
+            var submitButton = document.getElementById('submitButton');
+
+            // 添加表单提交事件监听器
+            apiForm.addEventListener('submit', function (e) {
+                e.preventDefault(); // 阻止表单的默认提交行为
+
+                // 使用 Fetch API 或其他 AJAX 方法发送表单数据到后端
+                fetch('/add_api/', {
+                    method: 'POST',
+                    body: new FormData(apiForm), // 使用 FormData 收集表单数据
+                })
+                    .then(function (response) {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            throw new Error('网络错误');
+                        }
+                    })
+                    .then(function (data) {
+                        // 在这里处理后端返回的数据
+                        // 显示添加成功的弹窗
+                        showSuccessDialog();
+                    })
+                    .catch(function (error) {
+                        console.error('请求失败:', error);
+                    });
+            });
+
+            // 显示成功弹窗的函数
+            function showSuccessDialog() {
+                var dialog = document.querySelector('.mdui-dialog-alert');
+                var overlay = document.querySelector('.mdui-overlay');
+                overlay.style.display = 'block';
+                dialog.style.display = 'block';
+            }
+
+
+        });
+
+        function hideDialog() {
+            var dialog = document.querySelector('.mdui-dialog-alert');
+            var overlay = document.querySelector('.mdui-overlay');
+            overlay.style.display = 'none';
+            dialog.style.display = 'none';
+            window.location.reload();
+        }
+    </script>
+
+{% endblock %}
+
+
+

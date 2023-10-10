@@ -1,0 +1,142 @@
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    /*background: url('https://pic.ziyuan.wang/2023/06/11/37df4761fe0ae.png');*/
+    background-repeat: no-repeat;
+
+}
+
+.login {
+    width: 300px;
+    height: 400px;
+    background-color: pink;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 20px;
+    z-index: 1;
+
+}
+
+.login.animate {
+    transform: rotate(5deg);
+    animation-name: left;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+
+}
+
+.regist {
+
+    position: absolute;
+    margin-left: 60px;
+    width: 300px;
+    height: 400px;
+    background-color: rgb(179, 205, 235);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 20px;
+    transform: rotate(-5deg);
+    z-index: 0;
+
+}
+
+.regist.animate {
+    animation-name: right;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+    /* animation-direction: reverse; */
+}
+
+input {
+    outline: none;
+    margin-bottom: 20px;
+    border: 1px solid rgb(81, 226, 236);
+    border-radius: 10px;
+    height: 30px;
+    width: 200px;
+    text-indent: 1em;
+}
+
+button {
+    outline: none;
+    width: 200px;
+    height: 30px;
+    background: rgb(81, 226, 236);
+    border: 0;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+button:hover {
+    background: rgb(192, 248, 154);
+
+}
+
+button:active {
+    background: rgb(238, 160, 114);
+
+}
+
+span {
+    font-size: 15px;
+    font-weight: 100;
+}
+
+a {
+    font-size: 15px;
+    color: rgb(140, 213, 255);
+}
+
+a:hover {
+    color: rgb(216, 100, 169);
+}
+
+@keyframes left {
+    0% {
+        z-index: 0;
+    }
+
+    50% {
+        transform: rotate(0deg) translateX(-180px);
+    }
+
+    100% {
+        transform: translateX(0px);
+        z-index: 1;
+
+    }
+}
+
+@keyframes right {
+    0% {
+        transform: rotate(-5deg);
+        z-index: 0;
+    }
+
+    50% {
+        transform: rotate(0deg) translateX(180px);
+    }
+
+    100% {
+        transform: translateX(0px);
+        z-index: 1;
+
+    }
+}
